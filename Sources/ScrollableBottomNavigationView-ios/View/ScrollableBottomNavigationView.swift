@@ -56,6 +56,8 @@ public final class ScrollableBottomNavigationView: UIView {
         super.init(frame: .zero)
         _render()
         _bind()
+        
+        backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {
