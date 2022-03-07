@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "ScrollableBottomNavigationView-ios",
+        "repositoryURL": "https://github.com/DaouMobile/ScrollableBottomNavigationView-ios.git",
+        "state": {
+          "branch": "main",
+          "revision": "b5fea94c8adc556d6b0cafdc557cba1bd04c39c4",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
