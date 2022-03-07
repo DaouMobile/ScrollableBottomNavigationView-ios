@@ -14,6 +14,7 @@
 		EAB5433E27D5B08D00E0EE7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAB5433D27D5B08D00E0EE7C /* Assets.xcassets */; };
 		EAB5434127D5B08D00E0EE7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAB5433F27D5B08D00E0EE7C /* LaunchScreen.storyboard */; };
 		EAB5434A27D5B1C400E0EE7C /* ScrollableBottomNavigationView-ios in Frameworks */ = {isa = PBXBuildFile; productRef = EAB5434927D5B1C400E0EE7C /* ScrollableBottomNavigationView-ios */; };
+		EAD79F9927D5C7D20089B542 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EAD79F9827D5C7D20089B542 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAB5434A27D5B1C400E0EE7C /* ScrollableBottomNavigationView-ios in Frameworks */,
+				EAD79F9927D5C7D20089B542 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +89,7 @@
 			name = ScrollableBottomNavigationViewSample;
 			packageProductDependencies = (
 				EAB5434927D5B1C400E0EE7C /* ScrollableBottomNavigationView-ios */,
+				EAD79F9827D5C7D20089B542 /* SnapKit */,
 			);
 			productName = ScrollableBottomNavigationViewSample;
 			productReference = EAB5433127D5B08D00E0EE7C /* ScrollableBottomNavigationViewSample.app */;
@@ -118,6 +121,7 @@
 			mainGroup = EAB5432827D5B08D00E0EE7C;
 			packageReferences = (
 				EAB5434827D5B1C400E0EE7C /* XCRemoteSwiftPackageReference "ScrollableBottomNavigationView-ios" */,
+				EAD79F9727D5C7D20089B542 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = EAB5433227D5B08D00E0EE7C /* Products */;
 			projectDirPath = "";
@@ -378,6 +382,14 @@
 				kind = branch;
 			};
 		};
+		EAD79F9727D5C7D20089B542 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -385,6 +397,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EAB5434827D5B1C400E0EE7C /* XCRemoteSwiftPackageReference "ScrollableBottomNavigationView-ios" */;
 			productName = "ScrollableBottomNavigationView-ios";
+		};
+		EAD79F9827D5C7D20089B542 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EAD79F9727D5C7D20089B542 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

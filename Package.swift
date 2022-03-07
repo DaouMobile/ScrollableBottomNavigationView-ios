@@ -15,13 +15,21 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "6.0.0")),
+        .package(url: "https://github.com/RxSwiftCommunity/RxGesture.git", .upToNextMajor(from: "4.0.0")),
+        .package(url: "https://github.com/SnapKit/SnapKit.git", .upToNextMajor(from: "5.0.0"))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "ScrollableBottomNavigationView-ios",
-            dependencies: []),
+            dependencies: [
+                .product(name: "RxSwift", package: "RxSwift", condition: nil),
+                .product(name: "RxCocoa", package: "RxSwift", condition: nil),
+                .product(name: "RxGesture", package: "RxGesture", condition: nil),
+                .product(name: "SnapKit", package: "SnapKit", condition: nil)
+            ]),
         .testTarget(
             name: "ScrollableBottomNavigationView-iosTests",
             dependencies: ["ScrollableBottomNavigationView-ios"]),
