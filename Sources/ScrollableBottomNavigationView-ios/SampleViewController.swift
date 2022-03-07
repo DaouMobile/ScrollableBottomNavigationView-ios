@@ -1,8 +1,8 @@
 import UIKit
 
-final class SampleViewController: UIViewController {
+public final class SampleViewController: UIViewController {
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .green
