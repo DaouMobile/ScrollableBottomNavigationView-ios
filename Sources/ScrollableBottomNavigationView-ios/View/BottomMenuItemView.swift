@@ -25,15 +25,15 @@ public final class BottomTabBarMenuItemView: UIView {
         return label
     }()
     
-    let name: String
+    public let name: String
     
-    var isActivated: Bool = false {
+    public var isActivated: Bool = false {
         willSet(newValue) {
             _setViewState(isActivated: newValue)
         }
     }
     
-    init(name: String, menuImageMapper: MenuImageMapper) {
+    public init(name: String, menuImageMapper: MenuImageMapper) {
         self.name = name
         _menuImageMapper = menuImageMapper
         super.init(frame: .zero)

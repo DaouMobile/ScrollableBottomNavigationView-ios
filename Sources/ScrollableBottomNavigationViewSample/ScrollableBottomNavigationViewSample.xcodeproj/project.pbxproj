@@ -7,14 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA3A153F27D5D5BB00621BF7 /* ScrollableBottomNavigationView-ios in Frameworks */ = {isa = PBXBuildFile; productRef = EA3A153E27D5D5BB00621BF7 /* ScrollableBottomNavigationView-ios */; };
+		EA3A154227D5D5D000621BF7 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = EA3A154127D5D5D000621BF7 /* RxCocoa */; };
+		EA3A154427D5D5D000621BF7 /* RxCocoa-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = EA3A154327D5D5D000621BF7 /* RxCocoa-Dynamic */; };
+		EA3A154627D5D5D000621BF7 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = EA3A154527D5D5D000621BF7 /* RxRelay */; };
+		EA3A154827D5D5D000621BF7 /* RxRelay-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = EA3A154727D5D5D000621BF7 /* RxRelay-Dynamic */; };
+		EA3A154A27D5D5D000621BF7 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EA3A154927D5D5D000621BF7 /* RxSwift */; };
+		EA3A154C27D5D5D000621BF7 /* RxSwift-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = EA3A154B27D5D5D000621BF7 /* RxSwift-Dynamic */; };
+		EA3A154F27D5D5DC00621BF7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EA3A154E27D5D5DC00621BF7 /* SnapKit */; };
 		EAB5433527D5B08D00E0EE7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB5433427D5B08D00E0EE7C /* AppDelegate.swift */; };
 		EAB5433727D5B08D00E0EE7C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB5433627D5B08D00E0EE7C /* SceneDelegate.swift */; };
 		EAB5433927D5B08D00E0EE7C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB5433827D5B08D00E0EE7C /* ViewController.swift */; };
 		EAB5433C27D5B08D00E0EE7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAB5433A27D5B08D00E0EE7C /* Main.storyboard */; };
 		EAB5433E27D5B08D00E0EE7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAB5433D27D5B08D00E0EE7C /* Assets.xcassets */; };
 		EAB5434127D5B08D00E0EE7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAB5433F27D5B08D00E0EE7C /* LaunchScreen.storyboard */; };
-		EAB5434A27D5B1C400E0EE7C /* ScrollableBottomNavigationView-ios in Frameworks */ = {isa = PBXBuildFile; productRef = EAB5434927D5B1C400E0EE7C /* ScrollableBottomNavigationView-ios */; };
-		EAD79F9927D5C7D20089B542 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EAD79F9827D5C7D20089B542 /* SnapKit */; };
 		EAD79F9C27D5C8A80089B542 /* BottomMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD79F9B27D5C8A80089B542 /* BottomMenuItem.swift */; };
 		EAD79F9F27D5C9390089B542 /* CustomMenuImageMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD79F9E27D5C9390089B542 /* CustomMenuImageMapper.swift */; };
 		EAD79FA227D5C9FA0089B542 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD79FA127D5C9FA0089B542 /* ViewModel.swift */; };
@@ -39,8 +45,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAB5434A27D5B1C400E0EE7C /* ScrollableBottomNavigationView-ios in Frameworks */,
-				EAD79F9927D5C7D20089B542 /* SnapKit in Frameworks */,
+				EA3A154C27D5D5D000621BF7 /* RxSwift-Dynamic in Frameworks */,
+				EA3A154F27D5D5DC00621BF7 /* SnapKit in Frameworks */,
+				EA3A154A27D5D5D000621BF7 /* RxSwift in Frameworks */,
+				EA3A154227D5D5D000621BF7 /* RxCocoa in Frameworks */,
+				EA3A154827D5D5D000621BF7 /* RxRelay-Dynamic in Frameworks */,
+				EA3A154427D5D5D000621BF7 /* RxCocoa-Dynamic in Frameworks */,
+				EA3A154627D5D5D000621BF7 /* RxRelay in Frameworks */,
+				EA3A153F27D5D5BB00621BF7 /* ScrollableBottomNavigationView-ios in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,8 +133,14 @@
 			);
 			name = ScrollableBottomNavigationViewSample;
 			packageProductDependencies = (
-				EAB5434927D5B1C400E0EE7C /* ScrollableBottomNavigationView-ios */,
-				EAD79F9827D5C7D20089B542 /* SnapKit */,
+				EA3A153E27D5D5BB00621BF7 /* ScrollableBottomNavigationView-ios */,
+				EA3A154127D5D5D000621BF7 /* RxCocoa */,
+				EA3A154327D5D5D000621BF7 /* RxCocoa-Dynamic */,
+				EA3A154527D5D5D000621BF7 /* RxRelay */,
+				EA3A154727D5D5D000621BF7 /* RxRelay-Dynamic */,
+				EA3A154927D5D5D000621BF7 /* RxSwift */,
+				EA3A154B27D5D5D000621BF7 /* RxSwift-Dynamic */,
+				EA3A154E27D5D5DC00621BF7 /* SnapKit */,
 			);
 			productName = ScrollableBottomNavigationViewSample;
 			productReference = EAB5433127D5B08D00E0EE7C /* ScrollableBottomNavigationViewSample.app */;
@@ -153,8 +171,9 @@
 			);
 			mainGroup = EAB5432827D5B08D00E0EE7C;
 			packageReferences = (
-				EAB5434827D5B1C400E0EE7C /* XCRemoteSwiftPackageReference "ScrollableBottomNavigationView-ios" */,
-				EAD79F9727D5C7D20089B542 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				EA3A153D27D5D5BB00621BF7 /* XCRemoteSwiftPackageReference "ScrollableBottomNavigationView-ios" */,
+				EA3A154027D5D5D000621BF7 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				EA3A154D27D5D5DC00621BF7 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = EAB5433227D5B08D00E0EE7C /* Products */;
 			projectDirPath = "";
@@ -410,15 +429,23 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		EAB5434827D5B1C400E0EE7C /* XCRemoteSwiftPackageReference "ScrollableBottomNavigationView-ios" */ = {
+		EA3A153D27D5D5BB00621BF7 /* XCRemoteSwiftPackageReference "ScrollableBottomNavigationView-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DaouMobile/ScrollableBottomNavigationView-ios.git";
 			requirement = {
-				branch = develop/bottomView;
+				branch = main;
 				kind = branch;
 			};
 		};
-		EAD79F9727D5C7D20089B542 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		EA3A154027D5D5D000621BF7 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+		EA3A154D27D5D5DC00621BF7 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
@@ -429,14 +456,44 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		EAB5434927D5B1C400E0EE7C /* ScrollableBottomNavigationView-ios */ = {
+		EA3A153E27D5D5BB00621BF7 /* ScrollableBottomNavigationView-ios */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EAB5434827D5B1C400E0EE7C /* XCRemoteSwiftPackageReference "ScrollableBottomNavigationView-ios" */;
+			package = EA3A153D27D5D5BB00621BF7 /* XCRemoteSwiftPackageReference "ScrollableBottomNavigationView-ios" */;
 			productName = "ScrollableBottomNavigationView-ios";
 		};
-		EAD79F9827D5C7D20089B542 /* SnapKit */ = {
+		EA3A154127D5D5D000621BF7 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EAD79F9727D5C7D20089B542 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = EA3A154027D5D5D000621BF7 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		EA3A154327D5D5D000621BF7 /* RxCocoa-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA3A154027D5D5D000621BF7 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = "RxCocoa-Dynamic";
+		};
+		EA3A154527D5D5D000621BF7 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA3A154027D5D5D000621BF7 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		EA3A154727D5D5D000621BF7 /* RxRelay-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA3A154027D5D5D000621BF7 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = "RxRelay-Dynamic";
+		};
+		EA3A154927D5D5D000621BF7 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA3A154027D5D5D000621BF7 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		EA3A154B27D5D5D000621BF7 /* RxSwift-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA3A154027D5D5D000621BF7 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = "RxSwift-Dynamic";
+		};
+		EA3A154E27D5D5DC00621BF7 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA3A154D27D5D5DC00621BF7 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */

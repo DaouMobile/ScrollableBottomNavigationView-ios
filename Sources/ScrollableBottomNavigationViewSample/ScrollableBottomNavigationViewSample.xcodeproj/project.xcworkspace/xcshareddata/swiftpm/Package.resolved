@@ -2,15 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "RxGesture",
-        "repositoryURL": "https://github.com/RxSwiftCommunity/RxGesture.git",
-        "state": {
-          "branch": null,
-          "revision": "53ebed7fe3f15021bf518d9d1e8b147e2ddffa0a",
-          "version": "4.0.3"
-        }
-      },
-      {
         "package": "RxSwift",
         "repositoryURL": "https://github.com/ReactiveX/RxSwift.git",
         "state": {
@@ -23,8 +14,8 @@
         "package": "ScrollableBottomNavigationView-ios",
         "repositoryURL": "https://github.com/DaouMobile/ScrollableBottomNavigationView-ios.git",
         "state": {
-          "branch": "develop/bottomView",
-          "revision": "0ca76a505582b849268530fdc738dd6754478c2e",
+          "branch": "main",
+          "revision": "6f5228243cbf4244858d1899fc5552da75210dd8",
           "version": null
         }
       },
