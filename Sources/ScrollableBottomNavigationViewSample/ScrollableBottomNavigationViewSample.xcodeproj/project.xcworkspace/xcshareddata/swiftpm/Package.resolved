@@ -11,15 +11,6 @@
         }
       },
       {
-        "package": "ScrollableBottomNavigationView-ios",
-        "repositoryURL": "https://github.com/DaouMobile/ScrollableBottomNavigationView-ios.git",
-        "state": {
-          "branch": "main",
-          "revision": "6f5228243cbf4244858d1899fc5552da75210dd8",
-          "version": null
-        }
-      },
-      {
         "package": "SnapKit",
         "repositoryURL": "https://github.com/SnapKit/SnapKit.git",
         "state": {
