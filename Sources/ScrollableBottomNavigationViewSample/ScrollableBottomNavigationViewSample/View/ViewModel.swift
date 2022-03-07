@@ -11,6 +11,7 @@ final class ViewModel {
     }
     
     init() {
+        // MARK: ViewModel에서 BottomView에 사용될 데이터 초기화
         _bottomMenuItems = .init(value: [
             BottomMenuItem(id: "040", name: "투데이"),
             BottomMenuItem(id: "041", name: "대화"),
