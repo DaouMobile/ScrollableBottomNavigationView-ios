@@ -1,4 +1,4 @@
-public protocol MenuItem {
-    var id: String { get }
-    var name: String { get }
+public struct BottomMenuItem {
+    let id: String
+    let name: String
 }

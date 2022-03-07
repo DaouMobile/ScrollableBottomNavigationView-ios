@@ -14,7 +14,7 @@ public final class ScrollableBottomNavigationView: UIView {
     
     // MARK: - UI components
     
-    public var menuItems: Driver<[MenuItem]> = .empty() {
+    public var menuItems: Driver<[BottomMenuItem]> = .empty() {
         willSet(newValue) {
             _updateMenuItems(newValue)
         }
@@ -39,8 +39,8 @@ public final class ScrollableBottomNavigationView: UIView {
     }()
     
     // MARK: - UI event control
-    private let _tapMenuItem: PublishRelay<MenuItem?> = .init()
-    public var tapMenuItem: Signal<MenuItem> {
+    private let _tapMenuItem: PublishRelay<BottomMenuItem?> = .init()
+    public var tapMenuItem: Signal<BottomMenuItem> {
         _tapMenuItem.asSignal().compactMap { $0 }
     }
     
@@ -129,7 +129,7 @@ public final class ScrollableBottomNavigationView: UIView {
             .disposed(by: _disposeBag)
     }
     
-    private func _updateMenuItems(_ menuItems: Driver<[MenuItem]>) {
+    private func _updateMenuItems(_ menuItems: Driver<[BottomMenuItem]>) {
         menuItems
             .map { (menuItems) in
                 menuItems.compactMap { [weak self] (menuItem) -> (Tapped, BottomTabBarMenuItemView)? in
