@@ -28,6 +28,7 @@ class ViewController: UIViewController {
             maker.bottom.equalTo(_bottomNavigationView.snp.top)
         }
         
+        _bottomNavigationView.menuItems = _viewModel.bottomMenuItems
         _bind()
     }
     
