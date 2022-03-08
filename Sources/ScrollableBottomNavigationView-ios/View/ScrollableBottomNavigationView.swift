@@ -9,7 +9,7 @@ public final class ScrollableBottomNavigationView: UIView {
     static let height: CGFloat = 50
 
     // MARK: - Basic Components
-    private let _menuImageMapper: MenuImageMapper
+    private let _bottomMenuImageMapper: BottomMenuImageMapper
     private let _disposeBag: DisposeBag
     
     // MARK: - UI components
@@ -49,10 +49,10 @@ public final class ScrollableBottomNavigationView: UIView {
         _tapFixedMenuItem.asSignal()
     }
     
-    public init(menuImageMapper: MenuImageMapper) {
-        _menuImageMapper = menuImageMapper
+    public init(bottomMenuImageMapper: BottomMenuImageMapper) {
+        _bottomMenuImageMapper = bottomMenuImageMapper
         _disposeBag = .init()
-        _fixedMenuItemView = .init(name: "메뉴", menuImageMapper: menuImageMapper)
+        _fixedMenuItemView = .init(name: "메뉴", bottomMenuImageMapper: bottomMenuImageMapper)
         super.init(frame: .zero)
         _render()
         _bind()
@@ -139,7 +139,7 @@ public final class ScrollableBottomNavigationView: UIView {
                     }()
                     let tabBarWidth: CGFloat = UIScreen.main.bounds.width - 56
                     let menuItemWidth: CGFloat = tabBarWidth / CGFloat(menuItemsCount + 1)
-                    let bottomTabBarMenuItemView: BottomTabBarMenuItemView = .init(name: menuItem.name, menuImageMapper: self._menuImageMapper)
+                    let bottomTabBarMenuItemView: BottomTabBarMenuItemView = .init(name: menuItem.name, bottomMenuImageMapper: self._bottomMenuImageMapper)
                     
                     self._fixedMenuItemView.snp.remakeConstraints { (maker) in
                         maker.width.equalTo(menuItemWidth)

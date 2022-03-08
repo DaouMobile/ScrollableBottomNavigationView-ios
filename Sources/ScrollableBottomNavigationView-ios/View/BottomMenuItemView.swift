@@ -5,7 +5,7 @@ import SnapKit
 
 public final class BottomTabBarMenuItemView: UIView {
     
-    private let _menuImageMapper: MenuImageMapper
+    private let _bottomMenuImageMapper: BottomMenuImageMapper
     
     // MARK: - UI Components
     private let _iconImageView: UIImageView = {
@@ -33,9 +33,9 @@ public final class BottomTabBarMenuItemView: UIView {
         }
     }
     
-    public init(name: String, menuImageMapper: MenuImageMapper) {
+    public init(name: String, bottomMenuImageMapper: BottomMenuImageMapper) {
         self.name = name
-        _menuImageMapper = menuImageMapper
+        _bottomMenuImageMapper = bottomMenuImageMapper
         super.init(frame: .zero)
         
         _setViewState(isActivated: false)
@@ -61,10 +61,10 @@ public final class BottomTabBarMenuItemView: UIView {
     
     private func _setViewState(isActivated: Bool) {
         if isActivated {
-            _iconImageView.image = _menuImageMapper.mapToImage(from: name)
+            _iconImageView.image = _bottomMenuImageMapper.mapToImage(from: name)
             _nameLabel.font = .systemFont(ofSize: 10, weight: .bold)
         } else {
-            _iconImageView.image = _menuImageMapper.mapToImage(from: name)
+            _iconImageView.image = _bottomMenuImageMapper.mapToImage(from: name)
             _nameLabel.font = .systemFont(ofSize: 10, weight: .light)
         }
     }
