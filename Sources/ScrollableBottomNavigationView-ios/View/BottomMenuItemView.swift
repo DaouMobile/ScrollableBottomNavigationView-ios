@@ -25,11 +25,15 @@ public final class BottomTabBarMenuItemView: UIView {
         return label
     }()
     
-    public var name: String
+    public var name: String {
+        willSet(newValue) {
+            _setViewState(name: newValue, isActivated: isActivated)
+        }
+    }
     
     public var isActivated: Bool = false {
         willSet(newValue) {
-            _setViewState(isActivated: newValue)
+            _setViewState(name: name, isActivated: newValue)
         }
     }
     
@@ -38,7 +42,7 @@ public final class BottomTabBarMenuItemView: UIView {
         _bottomMenuImageMapper = bottomMenuImageMapper
         super.init(frame: .zero)
         
-        _setViewState(isActivated: false)
+        _setViewState(name: name, isActivated: false)
         
         addSubview(_iconImageView)
         _iconImageView.snp.makeConstraints { (maker) in
@@ -59,12 +63,14 @@ public final class BottomTabBarMenuItemView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func _setViewState(isActivated: Bool) {
+    private func _setViewState(name: String, isActivated: Bool) {
         if isActivated {
             _iconImageView.image = _bottomMenuImageMapper.mapToImage(from: name)
+            _nameLabel.text = name
             _nameLabel.font = .systemFont(ofSize: 10, weight: .bold)
         } else {
             _iconImageView.image = _bottomMenuImageMapper.mapToImage(from: name)
+            _nameLabel.text = name
             _nameLabel.font = .systemFont(ofSize: 10, weight: .light)
         }
     }

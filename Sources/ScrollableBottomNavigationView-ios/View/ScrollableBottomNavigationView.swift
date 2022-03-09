@@ -14,6 +14,12 @@ public final class ScrollableBottomNavigationView: UIView {
     
     // MARK: - UI components
     
+    public var fixedMenuItem: Driver<BottomMenuItem> = .empty() {
+        willSet(newValue) {
+            _updateFixedMenuItem(newValue)
+        }
+    }
+    
     public var menuItems: Driver<[BottomMenuItem]> = .empty() {
         willSet(newValue) {
             _updateMenuItems(newValue)
@@ -125,6 +131,14 @@ public final class ScrollableBottomNavigationView: UIView {
         _activatedMenuItemView
             .subscribe(onNext: { [weak self] in
                 if $0?.name != self?._fixedMenuItemView.name { self?._fixedMenuItemView.isActivated = false }
+            })
+            .disposed(by: _disposeBag)
+    }
+    
+    private func _updateFixedMenuItem(_ menuItem: Driver<BottomMenuItem>) {
+        menuItem
+            .drive(onNext: { [weak self] (menuItem) in
+                self?._fixedMenuItemView.name = menuItem.name
             })
             .disposed(by: _disposeBag)
     }
