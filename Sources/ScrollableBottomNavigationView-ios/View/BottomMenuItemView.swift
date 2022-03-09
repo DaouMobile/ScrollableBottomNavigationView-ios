@@ -25,7 +25,7 @@ public final class BottomTabBarMenuItemView: UIView {
         return label
     }()
     
-    public let name: String
+    public var name: String
     
     public var isActivated: Bool = false {
         willSet(newValue) {

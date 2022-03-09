@@ -177,5 +177,4 @@ public final class ScrollableBottomNavigationView: UIView {
             })
             .disposed(by: _disposeBag)
     }
-    
 }
