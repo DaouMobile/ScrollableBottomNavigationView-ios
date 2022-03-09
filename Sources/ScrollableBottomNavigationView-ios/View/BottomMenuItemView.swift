@@ -65,11 +65,11 @@ public final class BottomTabBarMenuItemView: UIView {
     
     private func _setViewState(name: String, isActivated: Bool) {
         if isActivated {
-            _iconImageView.image = _bottomMenuImageMapper.mapToImage(from: name)
+            _iconImageView.image = _bottomMenuImageMapper.mapToActivatedImage(from: name)
             _nameLabel.text = name
             _nameLabel.font = .systemFont(ofSize: 10, weight: .bold)
         } else {
-            _iconImageView.image = _bottomMenuImageMapper.mapToImage(from: name)
+            _iconImageView.image = _bottomMenuImageMapper.mapToUnactivatedImage(from: name)
             _nameLabel.text = name
             _nameLabel.font = .systemFont(ofSize: 10, weight: .light)
         }
