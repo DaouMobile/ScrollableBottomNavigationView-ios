@@ -10,7 +10,7 @@ class ViewController: UIViewController {
     private let _contentView: UIView = .init(frame: .zero)
     
     // MARK: MenuImageMapper 프로토콜을 충족하는 객체를 주입
-    private let _bottomNavigationView: ScrollableBottomNavigationView = .init(menuImageMapper: CustomMenuImageMapper())
+    private let _bottomNavigationView: ScrollableBottomNavigationView = .init(bottomMenuImageMapper: CustomMenuImageMapper())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,6 @@ class ViewController: UIViewController {
         // MARK: Scrollable 메뉴들이 tap 되는 경우
         _bottomNavigationView.tapMenuItem
             .emit(onNext: { (item) in
-                print("tapped item: \(item.name)")
             })
             .disposed(by: _disposeBag)
 

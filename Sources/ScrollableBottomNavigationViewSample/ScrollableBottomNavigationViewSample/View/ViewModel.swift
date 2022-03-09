@@ -5,8 +5,8 @@ import ScrollableBottomNavigationView_ios
 
 final class ViewModel {
     
-    private let _bottomMenuItems: BehaviorRelay<[MenuItem]>
-    var bottomMenuItems: Driver<[MenuItem]> {
+    private let _bottomMenuItems: BehaviorRelay<[BottomMenuItem]>
+    var bottomMenuItems: Driver<[BottomMenuItem]> {
         _bottomMenuItems.asDriver()
     }
     
