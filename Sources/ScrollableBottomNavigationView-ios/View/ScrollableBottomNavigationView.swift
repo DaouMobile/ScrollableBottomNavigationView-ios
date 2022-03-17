@@ -70,7 +70,6 @@ public final class ScrollableBottomNavigationView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     public func resizeMenuItemViews(deviceWidth: CGFloat) {
         let menuItemsCount: Int = {
             self._menuItemsStackView.arrangedSubviews.count < 6 ? self._menuItemsStackView.arrangedSubviews.count : 5
@@ -89,6 +88,15 @@ public final class ScrollableBottomNavigationView: UIView {
                     maker.width.equalTo(menuItemWidth - 0.1).priority(1000)
                 }
             }
+    }
+    
+    public func toggleFixedMenuItem() {
+        _fixedMenuItemView.isActivated.toggle()
+        _fixedMenuItemView.isActivated
+            ? _activatedMenuItemView.accept(self._fixedMenuItemView)
+            : _activatedMenuItemView.accept(nil)
+        
+        _tapFixedMenuItem.accept((self._fixedMenuItemView.isActivated))
     }
     
     private func _render() {
@@ -121,10 +129,7 @@ public final class ScrollableBottomNavigationView: UIView {
     private func _bind() {
         _fixedMenuItemView.rx.tapGesture().when(.recognized).map { _ in }
             .bind(onNext: { [weak self] in
-                guard let self = self else { return }
-                self._fixedMenuItemView.isActivated.toggle()
-                self._tapFixedMenuItem.accept((self._fixedMenuItemView.isActivated))
-                self._activatedMenuItemView.accept(self._fixedMenuItemView)
+                self?.toggleFixedMenuItem()
             })
             .disposed(by: _disposeBag)
         
