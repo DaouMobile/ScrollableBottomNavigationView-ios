@@ -29,6 +29,9 @@ public final class ScrollableBottomNavigationView: UIView {
     private let _activatedMenuItemView: BehaviorRelay<BottomTabBarMenuItemView?> = .init(value: nil)
     
     private let _fixedMenuItemView: BottomTabBarMenuItemView
+    public var fixedMenuItemState: Bool {
+        _fixedMenuItemView.isActivated
+    }
 
     private let _menuItemsStackView: UIStackView = {
         let stackView: UIStackView = .init(frame: .zero)
