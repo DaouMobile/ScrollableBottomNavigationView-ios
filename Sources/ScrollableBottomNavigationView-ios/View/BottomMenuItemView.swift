@@ -25,24 +25,27 @@ public final class BottomTabBarMenuItemView: UIView {
         return label
     }()
     
-    public var name: String {
+    public var appName: String {
         willSet(newValue) {
-            _setViewState(name: newValue, isActivated: isActivated)
+            _setViewState(appName: newValue, localizedName: localizedName, isActivated: isActivated)
         }
     }
+    
+    let localizedName: String
     
     public var isActivated: Bool = false {
         willSet(newValue) {
-            _setViewState(name: name, isActivated: newValue)
+            _setViewState(appName: appName, localizedName: localizedName, isActivated: newValue)
         }
     }
     
-    public init(name: String, bottomMenuImageMapper: BottomMenuImageMapper) {
-        self.name = name
+    public init(appName: String, localizedName: String , bottomMenuImageMapper: BottomMenuImageMapper) {
+        self.appName = appName
+        self.localizedName = localizedName
         _bottomMenuImageMapper = bottomMenuImageMapper
         super.init(frame: .zero)
         
-        _setViewState(name: name, isActivated: false)
+        _setViewState(appName: appName, localizedName: localizedName, isActivated: false)
         
         addSubview(_iconImageView)
         _iconImageView.snp.makeConstraints { (maker) in
@@ -50,7 +53,7 @@ public final class BottomTabBarMenuItemView: UIView {
             maker.centerX.equalToSuperview()
         }
         
-        _nameLabel.text = name
+        _nameLabel.text = localizedName
         addSubview(_nameLabel)
         _nameLabel.snp.makeConstraints { (maker) in
             maker.top.equalTo(_iconImageView.snp.bottom).offset(2)
@@ -63,14 +66,14 @@ public final class BottomTabBarMenuItemView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func _setViewState(name: String, isActivated: Bool) {
+    private func _setViewState(appName: String, localizedName: String ,isActivated: Bool) {
         if isActivated {
-            _iconImageView.image = _bottomMenuImageMapper.mapToActivatedImage(from: name)
-            _nameLabel.text = name
+            _iconImageView.image = _bottomMenuImageMapper.mapToActivatedImage(from: appName)
+            _nameLabel.text = localizedName
             _nameLabel.font = .systemFont(ofSize: 10, weight: .bold)
         } else {
-            _iconImageView.image = _bottomMenuImageMapper.mapToUnactivatedImage(from: name)
-            _nameLabel.text = name
+            _iconImageView.image = _bottomMenuImageMapper.mapToUnactivatedImage(from: appName)
+            _nameLabel.text = localizedName
             _nameLabel.font = .systemFont(ofSize: 10, weight: .light)
         }
     }

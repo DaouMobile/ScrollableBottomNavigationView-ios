@@ -58,7 +58,7 @@ public final class ScrollableBottomNavigationView: UIView {
     public init(bottomMenuImageMapper: BottomMenuImageMapper) {
         _bottomMenuImageMapper = bottomMenuImageMapper
         _disposeBag = .init()
-        _fixedMenuItemView = .init(name: "메뉴", bottomMenuImageMapper: bottomMenuImageMapper)
+        _fixedMenuItemView = .init(appName: "menu", localizedName: "메뉴", bottomMenuImageMapper: bottomMenuImageMapper)
         super.init(frame: .zero)
         _render()
         _bind()
@@ -135,7 +135,7 @@ public final class ScrollableBottomNavigationView: UIView {
         
         _activatedMenuItemView
             .subscribe(onNext: { [weak self] in
-                if $0?.name != self?._fixedMenuItemView.name { self?._fixedMenuItemView.isActivated = false }
+                if $0?.appName != self?._fixedMenuItemView.appName { self?._fixedMenuItemView.isActivated = false }
             })
             .disposed(by: _disposeBag)
     }
@@ -143,7 +143,7 @@ public final class ScrollableBottomNavigationView: UIView {
     private func _updateFixedMenuItem(_ menuItem: Driver<BottomMenuItem>) {
         menuItem
             .drive(onNext: { [weak self] (menuItem) in
-                self?._fixedMenuItemView.name = menuItem.name
+                self?._fixedMenuItemView.appName = menuItem.appName
             })
             .disposed(by: _disposeBag)
     }
@@ -158,8 +158,8 @@ public final class ScrollableBottomNavigationView: UIView {
                     }()
                     let tabBarWidth: CGFloat = UIScreen.main.bounds.width - 56
                     let menuItemWidth: CGFloat = tabBarWidth / CGFloat(menuItemsCount + 1)
-                    let bottomTabBarMenuItemView: BottomTabBarMenuItemView = .init(name: menuItem.name, bottomMenuImageMapper: self._bottomMenuImageMapper)
-                    
+                    let bottomTabBarMenuItemView: BottomTabBarMenuItemView = .init(appName: menuItem.appName, localizedName: menuItem.localizedName, bottomMenuImageMapper: self._bottomMenuImageMapper)
+
                     self._fixedMenuItemView.snp.remakeConstraints { (maker) in
                         maker.width.equalTo(menuItemWidth)
                         maker.leading.equalToSuperview().offset(28)
@@ -177,7 +177,7 @@ public final class ScrollableBottomNavigationView: UIView {
                     view.rx.tapGesture().when(.recognized).map { _ in }
                     .bind(onNext: { [weak self] in
                         tapped()
-                        if view.name != self?._activatedMenuItemView.value?.name {
+                        if view.appName != self?._activatedMenuItemView.value?.appName {
                             view.isActivated.toggle()
                             self?._activatedMenuItemView.accept(view)
                         }
@@ -186,7 +186,7 @@ public final class ScrollableBottomNavigationView: UIView {
                     
                     self._activatedMenuItemView
                         .subscribe(onNext: {
-                            if $0?.name != view.name {
+                            if $0?.appName != view.appName {
                                 view.isActivated = false
                             }
                         })
