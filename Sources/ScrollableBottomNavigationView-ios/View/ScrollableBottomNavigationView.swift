@@ -29,9 +29,6 @@ public final class ScrollableBottomNavigationView: UIView {
     private let _activatedMenuItemView: BehaviorRelay<BottomTabBarMenuItemView?> = .init(value: nil)
     
     private let _fixedMenuItemView: BottomTabBarMenuItemView
-    public var fixedMenuItemState: Bool {
-        _fixedMenuItemView.isActivated
-    }
 
     private let _menuItemsStackView: UIStackView = {
         let stackView: UIStackView = .init(frame: .zero)
@@ -93,7 +90,7 @@ public final class ScrollableBottomNavigationView: UIView {
             }
     }
     
-    public func toggleFixedMenuItem() {
+    private func toggleFixedMenuItem() {
         _fixedMenuItemView.isActivated.toggle()
         _fixedMenuItemView.isActivated
             ? _activatedMenuItemView.accept(self._fixedMenuItemView)
@@ -198,5 +195,11 @@ public final class ScrollableBottomNavigationView: UIView {
                 }
             })
             .disposed(by: _disposeBag)
+    }
+    
+    public func optionalyToggleFixedMenuItem() {
+        if _fixedMenuItemView.isActivated {
+            toggleFixedMenuItem()
+        }
     }
 }
