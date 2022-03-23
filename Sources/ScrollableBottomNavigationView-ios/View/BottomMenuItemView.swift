@@ -27,15 +27,15 @@ public final class BottomTabBarMenuItemView: UIView {
     
     public var appName: String {
         willSet(newValue) {
-            _setViewState(appName: newValue, localizedName: localizedName, isActivated: isActivated)
+            _setViewState(appName: newValue, localizedName: localizedName, isSelected: isSelected)
         }
     }
     
     let localizedName: String
     
-    public var isActivated: Bool = false {
+    public var isSelected: Bool = false {
         willSet(newValue) {
-            _setViewState(appName: appName, localizedName: localizedName, isActivated: newValue)
+            _setViewState(appName: appName, localizedName: localizedName, isSelected: newValue)
         }
     }
     
@@ -45,7 +45,7 @@ public final class BottomTabBarMenuItemView: UIView {
         _bottomMenuImageMapper = bottomMenuImageMapper
         super.init(frame: .zero)
         
-        _setViewState(appName: appName, localizedName: localizedName, isActivated: false)
+        _setViewState(appName: appName, localizedName: localizedName, isSelected: false)
         
         addSubview(_iconImageView)
         _iconImageView.snp.makeConstraints { (maker) in
@@ -66,13 +66,13 @@ public final class BottomTabBarMenuItemView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func _setViewState(appName: String, localizedName: String ,isActivated: Bool) {
-        if isActivated {
-            _iconImageView.image = _bottomMenuImageMapper.mapToActivatedImage(from: appName)
+    private func _setViewState(appName: String, localizedName: String ,isSelected: Bool) {
+        if isSelected {
+            _iconImageView.image = _bottomMenuImageMapper.mapToSelectedImage(from: appName)
             _nameLabel.text = localizedName
             _nameLabel.font = .systemFont(ofSize: 10, weight: .bold)
         } else {
-            _iconImageView.image = _bottomMenuImageMapper.mapToUnactivatedImage(from: appName)
+            _iconImageView.image = _bottomMenuImageMapper.mapToUnselectedImage(from: appName)
             _nameLabel.text = localizedName
             _nameLabel.font = .systemFont(ofSize: 10, weight: .light)
         }
