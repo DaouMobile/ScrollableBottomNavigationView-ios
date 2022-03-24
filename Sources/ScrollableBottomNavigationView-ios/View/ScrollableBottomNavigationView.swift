@@ -188,6 +188,19 @@ public final class ScrollableBottomNavigationView: UIView {
             .disposed(by: _disposeBag)
     }
     
+    private func _updateSelectedMenuItem(_ selecetedMenuItem: Driver<BottomMenuItem?>) {
+        selecetedMenuItem
+            .drive(with: self, onNext: { (owner, menuItem) in
+                owner._menuItemsStackView.subviews.forEach {
+                    guard let view = $0 as? BottomTabBarMenuItemView else {
+                        return
+                    }
+                    view.isSelected = menuItem?.appName == view.appName
+                }
+            })
+            .disposed(by: _disposeBag)
+    }
+    
     public func optionalyToggleFixedMenuItem() {
         if _fixedMenuItemView.isSelected {
             toggleFixedMenuItem()
