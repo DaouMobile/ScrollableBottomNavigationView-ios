@@ -26,7 +26,7 @@ public final class ScrollableBottomNavigationView: UIView {
         }
     }
 
-    private let _activatedMenuItemView: BehaviorRelay<BottomTabBarMenuItemView?> = .init(value: nil)
+    public var selectedMenuItem: Driver<BottomMenuItem?> = .empty()
     
     private let _fixedMenuItemView: BottomTabBarMenuItemView
 
@@ -91,12 +91,8 @@ public final class ScrollableBottomNavigationView: UIView {
     }
     
     private func toggleFixedMenuItem() {
-        _fixedMenuItemView.isActivated.toggle()
-        _fixedMenuItemView.isActivated
-            ? _activatedMenuItemView.accept(self._fixedMenuItemView)
-            : _activatedMenuItemView.accept(nil)
-        
-        _tapFixedMenuItem.accept((self._fixedMenuItemView.isActivated))
+        _fixedMenuItemView.isSelected.toggle()
+        _tapFixedMenuItem.accept((self._fixedMenuItemView.isSelected))
     }
     
     private func _render() {
@@ -132,12 +128,6 @@ public final class ScrollableBottomNavigationView: UIView {
                 self?.toggleFixedMenuItem()
             })
             .disposed(by: _disposeBag)
-        
-        _activatedMenuItemView
-            .subscribe(onNext: { [weak self] in
-                if $0?.appName != self?._fixedMenuItemView.appName { self?._fixedMenuItemView.isActivated = false }
-            })
-            .disposed(by: _disposeBag)
     }
     
     private func _updateFixedMenuItem(_ menuItem: Driver<BottomMenuItem>) {
@@ -150,6 +140,12 @@ public final class ScrollableBottomNavigationView: UIView {
     
     private func _updateMenuItems(_ menuItems: Driver<[BottomMenuItem]>) {
         menuItems
+            .do(onNext: { [weak self] (_) in
+                self?._menuItemsStackView.arrangedSubviews.forEach {
+                    $0.snp.removeConstraints()
+                    $0.removeFromSuperview()
+                }
+            })
             .map { (menuItems) in
                 menuItems.compactMap { [weak self] (menuItem) -> (Tapped, BottomTabBarMenuItemView)? in
                     guard let self = self else { return nil }
@@ -175,22 +171,17 @@ public final class ScrollableBottomNavigationView: UIView {
                     guard let self = self else { return }
                     
                     view.rx.tapGesture().when(.recognized).map { _ in }
-                    .bind(onNext: { [weak self] in
-                        tapped()
-                        if view.appName != self?._activatedMenuItemView.value?.appName {
-                            view.isActivated.toggle()
-                            self?._activatedMenuItemView.accept(view)
-                        }
-                    })
-                    .disposed(by: self._disposeBag)
-                    
-                    self._activatedMenuItemView
-                        .subscribe(onNext: {
-                            if $0?.appName != view.appName {
-                                view.isActivated = false
-                            }
+                        .bind(with: self, onNext: { (owner, _) in
+                            tapped()
                         })
                         .disposed(by: self._disposeBag)
+                    
+                    self.selectedMenuItem
+                        .drive(with: self, onNext: { (owner, menuItem) in
+                            view.isSelected = view.appName == menuItem?.appName
+                        })
+                        .disposed(by: self._disposeBag)
+                    
                     self._menuItemsStackView.addArrangedSubview(view)
                 }
             })
@@ -198,7 +189,7 @@ public final class ScrollableBottomNavigationView: UIView {
     }
     
     public func optionalyToggleFixedMenuItem() {
-        if _fixedMenuItemView.isActivated {
+        if _fixedMenuItemView.isSelected {
             toggleFixedMenuItem()
         }
     }
