@@ -10,23 +10,16 @@ public final class ScrollableBottomNavigationView: UIView {
 
     // MARK: - Basic Components
     private let _bottomMenuImageMapper: BottomMenuImageMapper
-    private let _disposeBag: DisposeBag
+    private let _disposeBag: DisposeBag = .init()
+    private var _menuItemDisposables: [Disposable] = []
     
     // MARK: - UI components
     
-    public var fixedMenuItem: Driver<BottomMenuItem> = .empty() {
-        willSet(newValue) {
-            _updateFixedMenuItem(newValue)
-        }
-    }
+    public let fixedMenuItem: PublishRelay<BottomMenuItem> = .init()
     
-    public var menuItems: Driver<[BottomMenuItem]> = .empty() {
-        willSet(newValue) {
-            _updateMenuItems(newValue)
-        }
-    }
+    public let menuItems: PublishRelay<[BottomMenuItem]> = .init()
 
-    public var selectedMenuItem: Driver<BottomMenuItem?> = .empty()
+    public var selectedMenuItem: PublishRelay<BottomMenuItem?> = .init()
     
     private let _fixedMenuItemView: BottomTabBarMenuItemView
 
@@ -57,8 +50,8 @@ public final class ScrollableBottomNavigationView: UIView {
     
     public init(bottomMenuImageMapper: BottomMenuImageMapper) {
         _bottomMenuImageMapper = bottomMenuImageMapper
-        _disposeBag = .init()
         _fixedMenuItemView = .init(appName: "menu", localizedName: "메뉴", bottomMenuImageMapper: bottomMenuImageMapper)
+        
         super.init(frame: .zero)
         _render()
         _bind()
@@ -128,23 +121,18 @@ public final class ScrollableBottomNavigationView: UIView {
                 self?.toggleFixedMenuItem()
             })
             .disposed(by: _disposeBag)
-    }
-    
-    private func _updateFixedMenuItem(_ menuItem: Driver<BottomMenuItem>) {
-        menuItem
-            .drive(onNext: { [weak self] (menuItem) in
-                self?._fixedMenuItemView.appName = menuItem.appName
+        
+        fixedMenuItem
+            .asSignal()
+            .emit(with: self, onNext: { (owner, menuItem) in
+                owner._fixedMenuItemView.appName = menuItem.appName
             })
             .disposed(by: _disposeBag)
-    }
-    
-    private func _updateMenuItems(_ menuItems: Driver<[BottomMenuItem]>) {
+        
         menuItems
-            .do(onNext: { [weak self] (_) in
-                self?._menuItemsStackView.arrangedSubviews.forEach {
-                    $0.snp.removeConstraints()
-                    $0.removeFromSuperview()
-                }
+            .asSignal()
+            .do(onNext: { [weak self] _ in
+                self?.removeAllMenuItems()
             })
             .map { (menuItems) in
                 menuItems.compactMap { [weak self] (menuItem) -> (Tapped, BottomTabBarMenuItemView)? in
@@ -166,21 +154,20 @@ public final class ScrollableBottomNavigationView: UIView {
                     }
                     return (tapped: { [weak self] in self?._tapMenuItem.accept(menuItem) }, view: bottomTabBarMenuItemView)
                 }}
-            .drive(onNext: { [weak self] in
-                $0.forEach { (tapped, view) in
-                    guard let self = self else { return }
+            .emit(with: self, onNext: { (owner, items) in
+                items.forEach { (tapped, view) in
                     
-                    view.rx.tapGesture().when(.recognized).map { _ in }
+                    let tapDisposable: Disposable = view.rx.tapGesture().when(.recognized).map { _ in }
                         .bind(with: self, onNext: { (owner, _) in
                             tapped()
                         })
-                        .disposed(by: self._disposeBag)
+                    owner._menuItemDisposables.append(tapDisposable)
                     
-                    self.selectedMenuItem
-                        .drive(with: self, onNext: { (owner, menuItem) in
+                    let selectDisposable: Disposable = self.selectedMenuItem
+                        .bind(with: self, onNext: { (owner, menuItem) in
                             view.isSelected = view.appName == menuItem?.appName
                         })
-                        .disposed(by: self._disposeBag)
+                    owner._menuItemDisposables.append(selectDisposable)
                     
                     self._menuItemsStackView.addArrangedSubview(view)
                 }
@@ -188,17 +175,13 @@ public final class ScrollableBottomNavigationView: UIView {
             .disposed(by: _disposeBag)
     }
     
-    private func _updateSelectedMenuItem(_ selecetedMenuItem: Driver<BottomMenuItem?>) {
-        selecetedMenuItem
-            .drive(with: self, onNext: { (owner, menuItem) in
-                owner._menuItemsStackView.subviews.forEach {
-                    guard let view = $0 as? BottomTabBarMenuItemView else {
-                        return
-                    }
-                    view.isSelected = menuItem?.appName == view.appName
-                }
-            })
-            .disposed(by: _disposeBag)
+    private func removeAllMenuItems() {
+        _menuItemDisposables.forEach({ $0.dispose() })
+        _menuItemDisposables = []
+        _menuItemsStackView.arrangedSubviews.forEach {
+            $0.snp.removeConstraints()
+            $0.removeFromSuperview()
+        }
     }
     
     public func optionalyToggleFixedMenuItem() {
