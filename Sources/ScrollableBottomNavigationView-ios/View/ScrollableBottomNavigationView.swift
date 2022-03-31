@@ -19,9 +19,11 @@ public final class ScrollableBottomNavigationView: UIView {
     
     public let menuItems: PublishRelay<[BottomMenuItem]> = .init()
 
-    public var selectedMenuItem: PublishRelay<BottomMenuItem?> = .init()
+    public var selectedMenuItem: BehaviorRelay<BottomMenuItem?> = .init(value: nil)
     
     private let _fixedMenuItemView: BottomTabBarMenuItemView
+    
+    public var menuBadgeCount: BehaviorRelay<[String: Observable<UInt>]> = .init(value: [:])
 
     private let _menuItemsStackView: UIStackView = {
         let stackView: UIStackView = .init(frame: .zero)
@@ -158,16 +160,26 @@ public final class ScrollableBottomNavigationView: UIView {
                 items.forEach { (tapped, view) in
                     
                     let tapDisposable: Disposable = view.rx.tapGesture().when(.recognized).map { _ in }
-                        .bind(with: self, onNext: { (owner, _) in
-                            tapped()
-                        })
+                        .bind(onNext: { tapped() })
                     owner._menuItemDisposables.append(tapDisposable)
                     
                     let selectDisposable: Disposable = self.selectedMenuItem
-                        .bind(with: self, onNext: { (owner, menuItem) in
+                        .bind(onNext: { (menuItem) in
                             view.isSelected = view.appName == menuItem?.appName
                         })
                     owner._menuItemDisposables.append(selectDisposable)
+                    
+                    let menuBadgesDisposable: Disposable = self.menuBadgeCount
+                        .bind(with: self, onNext: { (owner, menuBadgesCount) in
+                            guard let badgeCount = view.badgeCount,
+                                  let menuBadgesCount = menuBadgesCount[view.appName] else {
+                                return
+                            }
+                            
+                            let badgeCountDisposable: Disposable = menuBadgesCount.bind(to: badgeCount)
+                            owner._menuItemDisposables.append(badgeCountDisposable)
+                        })
+                    owner._menuItemDisposables.append(menuBadgesDisposable)
                     
                     self._menuItemsStackView.addArrangedSubview(view)
                 }

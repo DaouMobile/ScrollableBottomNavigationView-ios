@@ -24,6 +24,21 @@ public final class BottomTabBarMenuItemView: UIView {
         label.sizeToFit()
         return label
     }()
+    private let _badgeView: UIView = {
+        let view: UIView = .init(frame: .zero)
+        view.backgroundColor = .init(rgb: 0xFF4545)
+        view.layer.cornerRadius = 8
+        view.snp.makeConstraints { (maker) in
+            maker.height.equalTo(16)
+        }
+        return view
+    }()
+    private let _badgeCountLabel: UILabel = {
+        let label: UILabel = .init(frame: .zero)
+        label.font = .systemFont(ofSize: 11, weight: .bold)
+        label.textColor = .white
+        return label
+    }()
     
     public var appName: String {
         willSet(newValue) {
@@ -36,6 +51,13 @@ public final class BottomTabBarMenuItemView: UIView {
     public var isSelected: Bool = false {
         willSet(newValue) {
             _setViewState(appName: appName, localizedName: localizedName, isSelected: newValue)
+        }
+    }
+    
+    var badgeCount: Binder<UInt>? {
+        Binder(self) { (view, count) in
+            view._badgeView.isHidden = (count == 0)
+            view._badgeCountLabel.text = count < 999 ? count.description : "\(count.description)+"
         }
     }
     
@@ -59,6 +81,21 @@ public final class BottomTabBarMenuItemView: UIView {
             maker.top.equalTo(_iconImageView.snp.bottom).offset(2)
             maker.centerX.equalToSuperview()
             maker.bottom.equalToSuperview()
+        }
+        
+        _badgeView.isHidden = true
+        addSubview(_badgeView)
+        _badgeView.snp.makeConstraints { (maker) in
+            maker.centerX.equalTo(_iconImageView.snp.trailing)
+            maker.centerY.equalTo(_iconImageView.snp.top).offset(4)
+        }
+        
+        _badgeView.addSubview(_badgeCountLabel)
+        _badgeCountLabel.snp.makeConstraints { (maker) in
+            maker.top.equalToSuperview().offset(3)
+            maker.bottom.equalToSuperview().offset(-3)
+            maker.leading.equalToSuperview().offset(6)
+            maker.trailing.equalToSuperview().offset(-6)
         }
     }
     
