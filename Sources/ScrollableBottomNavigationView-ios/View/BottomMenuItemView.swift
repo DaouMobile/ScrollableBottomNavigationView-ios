@@ -54,8 +54,9 @@ public final class BottomTabBarMenuItemView: UIView {
         }
     }
     
-    var badgeCount: Binder<UInt>? {
+    var badgeCount: Binder<Int> {
         Binder(self) { (view, count) in
+            guard count >= 0 else { return }
             view._badgeView.isHidden = (count == 0)
             view._badgeCountLabel.text = count < 999 ? count.description : "\(count.description)+"
         }

@@ -23,7 +23,7 @@ public final class ScrollableBottomNavigationView: UIView {
     
     private let _fixedMenuItemView: BottomTabBarMenuItemView
     
-    public var menuBadgeCount: BehaviorRelay<[String: Observable<UInt>]> = .init(value: [:])
+    public var menuBadgeCount: BehaviorRelay<[String: Observable<Int>]> = .init(value: [:])
 
     private let _menuItemsStackView: UIStackView = {
         let stackView: UIStackView = .init(frame: .zero)
@@ -171,12 +171,11 @@ public final class ScrollableBottomNavigationView: UIView {
                     
                     let menuBadgesDisposable: Disposable = self.menuBadgeCount
                         .bind(with: self, onNext: { (owner, menuBadgesCount) in
-                            guard let badgeCount = view.badgeCount,
-                                  let menuBadgesCount = menuBadgesCount[view.appName] else {
+                            guard let menuBadgesCount = menuBadgesCount[view.appName] else {
                                 return
                             }
                             
-                            let badgeCountDisposable: Disposable = menuBadgesCount.bind(to: badgeCount)
+                            let badgeCountDisposable: Disposable = menuBadgesCount.bind(to: view.badgeCount)
                             owner._menuItemDisposables.append(badgeCountDisposable)
                         })
                     owner._menuItemDisposables.append(menuBadgesDisposable)
