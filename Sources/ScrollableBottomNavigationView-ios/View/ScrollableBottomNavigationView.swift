@@ -4,22 +4,58 @@ import RxCocoa
 import RxGesture
 
 public final class ScrollableBottomNavigationView: UIView {
-    typealias Tapped = () -> Void
-    
+    static let tabBarWidth: CGFloat = UIScreen.main.bounds.width - 56
     static let height: CGFloat = 50
 
     // MARK: - Basic Components
     private let _bottomMenuImageMapper: BottomMenuImageMapper
     private let _disposeBag: DisposeBag = .init()
     private var _menuItemDisposables: [Disposable] = []
+    private var _fixedMenuItemDisposable: Disposable? = nil
     
-    // MARK: - UI components
+    public var menuItems: Binder<[BottomMenuItem]> {
+        return .init(self) { (view, items) in
+            view.removeAllMenuItems()
+            
+            let count: Int = items.count
+            let menuItemWidth: CGFloat = Self.tabBarWidth / CGFloat(count + 1)
+            
+            self._fixedMenuItemView.snp.remakeConstraints { (maker) in
+                maker.width.equalTo(menuItemWidth)
+                maker.leading.equalToSuperview().offset(28)
+                maker.centerY.equalToSuperview()
+            }
+            
+            items
+                .compactMap({ view._makeMenuItemView(menuItem: $0) })
+                .forEach({ (menuItemView) in
+                    menuItemView.isSelected = menuItemView.appName == view._selectedMenuItemName
+                    view._menuItemsStackView.addArrangedSubview(menuItemView)
+                    menuItemView.snp.makeConstraints { (maker) in
+                        maker.width.equalTo(menuItemWidth)
+                    }
+                    view._bind(menuItemView)
+                })
+        }
+    }
     
-    public let fixedMenuItem: PublishRelay<BottomMenuItem> = .init()
-    
-    public let menuItems: PublishRelay<[BottomMenuItem]> = .init()
-
-    public var selectedMenuItem: BehaviorRelay<BottomMenuItem?> = .init(value: nil)
+    private var _selectedMenuItemName: String = "" {
+        didSet {
+            guard let menuItemsViews = _menuItemsStackView.arrangedSubviews as? [BottomTabBarMenuItemView],
+                  menuItemsViews.contains(where: { $0.appName == _selectedMenuItemName })
+            else {
+                return
+            }
+            menuItemsViews.forEach {
+                $0.isSelected = $0.appName == _selectedMenuItemName
+            }
+        }
+    }
+    public var selectedMenuItemName: Binder<String> {
+        return .init(self) { (view, appName) in
+            view._selectedMenuItemName = appName
+        }
+    }
     
     private let _fixedMenuItemView: BottomTabBarMenuItemView
     
@@ -40,9 +76,9 @@ public final class ScrollableBottomNavigationView: UIView {
     }()
     
     // MARK: - UI event control
-    private let _tapMenuItem: PublishRelay<BottomMenuItem?> = .init()
-    public var tapMenuItem: Signal<BottomMenuItem> {
-        _tapMenuItem.asSignal().compactMap { $0 }
+    private let _tapMenuItem: PublishRelay<String> = .init()
+    public var tapMenuItem: Signal<String> {
+        _tapMenuItem.asSignal()
     }
     
     private let _tapFixedMenuItem: PublishRelay<Bool> = .init()
@@ -52,17 +88,19 @@ public final class ScrollableBottomNavigationView: UIView {
     
     public init(bottomMenuImageMapper: BottomMenuImageMapper) {
         _bottomMenuImageMapper = bottomMenuImageMapper
-        _fixedMenuItemView = .init(appName: "menu", localizedName: "메뉴", bottomMenuImageMapper: bottomMenuImageMapper)
-        
+        _fixedMenuItemView = .init(appName: "menu", localizedName: "메뉴",bottomMenuImageMapper: bottomMenuImageMapper)
         super.init(frame: .zero)
         _render()
-        _bind()
-        
-        backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        _fixedMenuItemDisposable?.dispose()
+        _fixedMenuItemDisposable = nil
+        removeAllMenuItems()
     }
     
     public func resizeMenuItemViews(deviceWidth: CGFloat) {
@@ -80,27 +118,31 @@ public final class ScrollableBottomNavigationView: UIView {
         self._menuItemsStackView.arrangedSubviews
             .forEach {
                 $0.snp.remakeConstraints { (maker) in
-                    maker.width.equalTo(menuItemWidth - 0.1).priority(1000)
+                    maker.width.equalTo(menuItemWidth - 0.1)
                 }
             }
     }
     
-    private func toggleFixedMenuItem() {
+    private func _toggleFixedMenuItem() {
         _fixedMenuItemView.isSelected.toggle()
-        _tapFixedMenuItem.accept((self._fixedMenuItemView.isSelected))
+        _tapFixedMenuItem.accept((_fixedMenuItemView.isSelected))
     }
     
     private func _render() {
+        backgroundColor = .white
         snp.makeConstraints { (maker) in
             maker.height.equalTo(Self.height)
         }
-        
+    
+        let fixedMenuItemDisposable = _fixedMenuItemView.rx.tapGesture().when(.recognized).map { _ in }
+            .bind(onNext: _toggleFixedMenuItem)
+        _fixedMenuItemDisposable = fixedMenuItemDisposable
         addSubview(_fixedMenuItemView)
         _menuItemsScrollView.addSubview(_menuItemsStackView)
         addSubview(_menuItemsScrollView)
         
         _fixedMenuItemView.snp.makeConstraints { (maker) in
-            maker.leading.equalToSuperview().offset(28)
+            maker.centerX.equalToSuperview()
             maker.centerY.equalToSuperview()
         }
         
@@ -117,73 +159,28 @@ public final class ScrollableBottomNavigationView: UIView {
         }
     }
     
-    private func _bind() {
-        _fixedMenuItemView.rx.tapGesture().when(.recognized).map { _ in }
-            .bind(onNext: { [weak self] in
-                self?.toggleFixedMenuItem()
+    private func _makeMenuItemView(menuItem: BottomMenuItem) -> BottomTabBarMenuItemView? {
+        let bottomTabBarMenuItemView: BottomTabBarMenuItemView = .init(appName: menuItem.appName, localizedName: menuItem.localizedName, bottomMenuImageMapper: self._bottomMenuImageMapper)
+        return bottomTabBarMenuItemView
+    }
+    
+    private func _bind(_ menuItemView: BottomTabBarMenuItemView) {
+        let tapDisposable: Disposable = menuItemView.rx.tapGesture().when(.recognized)
+            .bind(with: self, onNext: { (owner, _) in
+                owner._tapMenuItem.accept(menuItemView.appName)
             })
-            .disposed(by: _disposeBag)
+        _menuItemDisposables.append(tapDisposable)
         
-        fixedMenuItem
-            .asSignal()
-            .emit(with: self, onNext: { (owner, menuItem) in
-                owner._fixedMenuItemView.appName = menuItem.appName
-            })
-            .disposed(by: _disposeBag)
-        
-        menuItems
-            .asSignal()
-            .do(onNext: { [weak self] _ in
-                self?.removeAllMenuItems()
-            })
-            .map { (menuItems) in
-                menuItems.compactMap { [weak self] (menuItem) -> (Tapped, BottomTabBarMenuItemView)? in
-                    guard let self = self else { return nil }
-                    let menuItemsCount: Int = {
-                        menuItems.count < 6 ? menuItems.count : 5
-                    }()
-                    let tabBarWidth: CGFloat = UIScreen.main.bounds.width - 56
-                    let menuItemWidth: CGFloat = tabBarWidth / CGFloat(menuItemsCount + 1)
-                    let bottomTabBarMenuItemView: BottomTabBarMenuItemView = .init(appName: menuItem.appName, localizedName: menuItem.localizedName, bottomMenuImageMapper: self._bottomMenuImageMapper)
-
-                    self._fixedMenuItemView.snp.remakeConstraints { (maker) in
-                        maker.width.equalTo(menuItemWidth)
-                        maker.leading.equalToSuperview().offset(28)
-                        maker.centerY.equalToSuperview()
-                    }
-                    bottomTabBarMenuItemView.snp.makeConstraints { (maker) in
-                        maker.width.equalTo(menuItemWidth - 0.1).priority(1000)
-                    }
-                    return (tapped: { [weak self] in self?._tapMenuItem.accept(menuItem) }, view: bottomTabBarMenuItemView)
-                }}
-            .emit(with: self, onNext: { (owner, items) in
-                items.forEach { (tapped, view) in
-                    
-                    let tapDisposable: Disposable = view.rx.tapGesture().when(.recognized).map { _ in }
-                        .bind(onNext: { tapped() })
-                    owner._menuItemDisposables.append(tapDisposable)
-                    
-                    let selectDisposable: Disposable = self.selectedMenuItem
-                        .bind(onNext: { (menuItem) in
-                            view.isSelected = view.appName == menuItem?.appName
-                        })
-                    owner._menuItemDisposables.append(selectDisposable)
-                    
-                    let menuBadgesDisposable: Disposable = self.menuBadgeCount
-                        .bind(with: self, onNext: { (owner, menuBadgesCount) in
-                            guard let menuBadgesCount = menuBadgesCount[view.appName] else {
-                                return
-                            }
-                            
-                            let badgeCountDisposable: Disposable = menuBadgesCount.bind(to: view.badgeCount)
-                            owner._menuItemDisposables.append(badgeCountDisposable)
-                        })
-                    owner._menuItemDisposables.append(menuBadgesDisposable)
-                    
-                    self._menuItemsStackView.addArrangedSubview(view)
+        let menuBadgesDisposable: Disposable = self.menuBadgeCount
+            .bind(with: self, onNext: { (owner, menuBadgesCount) in
+                guard let menuBadgesCount = menuBadgesCount[menuItemView.appName] else {
+                    return
                 }
+                
+                let badgeCountDisposable: Disposable = menuBadgesCount.bind(to: menuItemView.badgeCount)
+                owner._menuItemDisposables.append(badgeCountDisposable)
             })
-            .disposed(by: _disposeBag)
+        _menuItemDisposables.append(menuBadgesDisposable)
     }
     
     private func removeAllMenuItems() {
@@ -197,7 +194,7 @@ public final class ScrollableBottomNavigationView: UIView {
     
     public func optionalyToggleFixedMenuItem() {
         if _fixedMenuItemView.isSelected {
-            toggleFixedMenuItem()
+            _toggleFixedMenuItem()
         }
     }
 }
