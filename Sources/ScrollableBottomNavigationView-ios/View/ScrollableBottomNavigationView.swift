@@ -4,7 +4,7 @@ import RxCocoa
 import RxGesture
 
 public final class ScrollableBottomNavigationView: UIView {
-    static let tabBarWidth: CGFloat = UIScreen.main.bounds.width - 56
+    static let tabBarWidth: CGFloat = UIScreen.main.bounds.width
     static let height: CGFloat = 50
 
     // MARK: - Basic Components
@@ -22,7 +22,7 @@ public final class ScrollableBottomNavigationView: UIView {
             
             self._fixedMenuItemView.snp.remakeConstraints { (maker) in
                 maker.width.equalTo(menuItemWidth)
-                maker.leading.equalToSuperview().offset(28)
+                maker.leading.equalToSuperview()
                 maker.centerY.equalToSuperview()
             }
             
@@ -107,7 +107,7 @@ public final class ScrollableBottomNavigationView: UIView {
         let menuItemsCount: Int = {
             self._menuItemsStackView.arrangedSubviews.count < 6 ? self._menuItemsStackView.arrangedSubviews.count : 5
         }()
-        let tabBarWidth: CGFloat = deviceWidth - 56
+        let tabBarWidth: CGFloat = deviceWidth
         let menuItemWidth: CGFloat = tabBarWidth / CGFloat(menuItemsCount + 1)
         
         self._fixedMenuItemView.snp.remakeConstraints { (maker) in
@@ -155,7 +155,7 @@ public final class ScrollableBottomNavigationView: UIView {
             maker.height.equalTo(Self.height)
             maker.leading.equalTo(_fixedMenuItemView.snp.trailing)
             maker.top.bottom.equalToSuperview()
-            maker.trailing.equalToSuperview().offset(-28)
+            maker.trailing.equalToSuperview()
         }
     }
     
