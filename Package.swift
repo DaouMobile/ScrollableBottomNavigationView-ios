@@ -29,7 +29,9 @@ let package = Package(
                 .product(name: "RxCocoa", package: "RxSwift", condition: nil),
                 .product(name: "RxGesture", package: "RxGesture", condition: nil),
                 .product(name: "SnapKit", package: "SnapKit", condition: nil)
-            ]),
+            ],
+            resources: [.process("Resources")]
+        ),
         .testTarget(
             name: "ScrollableBottomNavigationView-iosTests",
             dependencies: ["ScrollableBottomNavigationView-ios"]),

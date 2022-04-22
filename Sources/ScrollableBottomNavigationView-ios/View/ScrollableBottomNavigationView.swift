@@ -12,13 +12,20 @@ public final class ScrollableBottomNavigationView: UIView {
     private let _disposeBag: DisposeBag = .init()
     private var _menuItemDisposables: [Disposable] = []
     private var _fixedMenuItemDisposable: Disposable? = nil
+    private var _menuItemsCount: Int = 0
+    private var _menuItemWidth: CGFloat = 0
     
     public var menuItems: Binder<[BottomMenuItem]> {
         return .init(self) { (view, items) in
+            guard !items.isEmpty else { return }
+            view._menuItemsCount = items.count
+            view._rightChevronImageView.isHidden = items.count < 6
+            
             view.removeAllMenuItems()
             
-            let count: Int = items.count
-            let menuItemWidth: CGFloat = Self.tabBarWidth / CGFloat(count + 1)
+            let presentableMenuItemCount: Int = items.count < 6 ? items.count : 5
+            let menuItemWidth: CGFloat = (Self.tabBarWidth - 32) / CGFloat(presentableMenuItemCount + 1)
+            view._menuItemWidth = menuItemWidth
             
             self._fixedMenuItemView.snp.remakeConstraints { (maker) in
                 maker.width.equalTo(menuItemWidth)
@@ -74,6 +81,32 @@ public final class ScrollableBottomNavigationView: UIView {
         scrollView.showsHorizontalScrollIndicator = false
         return scrollView
     }()
+    
+    private let _leftChevronImageView: UIImageView = {
+        let imageView: UIImageView = .init(image: UIImage(named: "ic_chevron_left_dark_16"))
+        return imageView
+    }()
+    private let _rightChevronImageView: UIImageView = {
+        let imageView: UIImageView = .init(image: UIImage(named: "ic_chevron_right_dark_16"))
+        return imageView
+    }()
+    
+    private var _isLeftEdge: Driver<Bool> {
+        _menuItemsScrollView.rx.contentOffset.asDriver()
+            .map({ $0.x })
+            .map({ [weak self] (x) in
+                guard let owner = self, owner._menuItemsCount > 5 else { return true }
+                return x <= 0
+            })
+    }
+    private var _isRightEdge: Driver<Bool> {
+        _menuItemsScrollView.rx.contentOffset.asDriver()
+            .map({ $0.x })
+            .map({ [weak self] (x) in
+                guard let owner = self, owner._menuItemsCount > 5 else { return true }
+                return CGFloat(x) + (owner._menuItemWidth * 5) >= (owner._menuItemWidth * CGFloat(owner._menuItemsCount)) - (owner._menuItemWidth / 2)
+            })
+    }
     
     // MARK: - UI event control
     private let _tapMenuItem: PublishRelay<String> = .init()
@@ -138,13 +171,21 @@ public final class ScrollableBottomNavigationView: UIView {
             .bind(onNext: _toggleFixedMenuItem)
         _fixedMenuItemDisposable = fixedMenuItemDisposable
         addSubview(_fixedMenuItemView)
-        _menuItemsScrollView.addSubview(_menuItemsStackView)
-        addSubview(_menuItemsScrollView)
-        
         _fixedMenuItemView.snp.makeConstraints { (maker) in
             maker.centerX.equalToSuperview()
             maker.centerY.equalToSuperview()
         }
+        
+        _leftChevronImageView.isHidden = true
+        addSubview(_leftChevronImageView)
+        _leftChevronImageView.snp.makeConstraints({ (maker) in
+            maker.size.equalTo(16)
+            maker.centerY.equalToSuperview()
+            maker.leading.equalTo(_fixedMenuItemView.snp.trailing)
+        })
+        
+        _menuItemsScrollView.addSubview(_menuItemsStackView)
+        addSubview(_menuItemsScrollView)
         
         _menuItemsStackView.snp.makeConstraints { (maker) in
             maker.leading.trailing.equalToSuperview()
@@ -153,10 +194,25 @@ public final class ScrollableBottomNavigationView: UIView {
         
         _menuItemsScrollView.snp.makeConstraints { (maker) in
             maker.height.equalTo(Self.height)
-            maker.leading.equalTo(_fixedMenuItemView.snp.trailing)
+            maker.leading.equalTo(_leftChevronImageView.snp.trailing)
             maker.top.bottom.equalToSuperview()
-            maker.trailing.equalToSuperview()
         }
+        
+        _rightChevronImageView.isHidden = true
+        addSubview(_rightChevronImageView)
+        _rightChevronImageView.snp.makeConstraints({ (maker) in
+            maker.size.equalTo(16)
+            maker.centerY.equalToSuperview()
+            maker.leading.equalTo(_menuItemsScrollView.snp.trailing)
+            maker.trailing.equalToSuperview().offset(-2)
+        })
+        
+        _isLeftEdge
+            .drive(_leftChevronImageView.rx.isHidden)
+            .disposed(by: _disposeBag)
+        _isRightEdge
+            .drive(_rightChevronImageView.rx.isHidden)
+            .disposed(by: _disposeBag)
     }
     
     private func _makeMenuItemView(menuItem: BottomMenuItem) -> BottomTabBarMenuItemView? {
