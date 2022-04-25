@@ -5,6 +5,7 @@ import RxGesture
 
 public final class ScrollableBottomNavigationView: UIView {
     static let tabBarWidth: CGFloat = UIScreen.main.bounds.width
+    static let maximumPresentableMenuItemCount: Int = 5
     static let height: CGFloat = 50
 
     // MARK: - Basic Components
@@ -19,12 +20,12 @@ public final class ScrollableBottomNavigationView: UIView {
         return .init(self) { (view, items) in
             guard !items.isEmpty else { return }
             view._menuItemsCount = items.count
-            view._rightChevronImageView.isHidden = items.count < 6
+            view._rightChevronImageView.isHidden = items.count <= Self.maximumPresentableMenuItemCount
             
             view.removeAllMenuItems()
             
-            let presentableMenuItemCount: Int = items.count < 6 ? items.count : 5
-            let menuItemWidth: CGFloat = (Self.tabBarWidth - 16) / CGFloat(presentableMenuItemCount + 1)
+            let presentableMenuItemCount: Int = items.count <= Self.maximumPresentableMenuItemCount ? items.count : Self.maximumPresentableMenuItemCount
+            let menuItemWidth: CGFloat = (Self.tabBarWidth - (items.count <= Self.maximumPresentableMenuItemCount ? 0 : 16)) / CGFloat(presentableMenuItemCount + 1)
             view._menuItemWidth = menuItemWidth
             
             self._fixedMenuItemView.snp.remakeConstraints { (maker) in
@@ -32,6 +33,15 @@ public final class ScrollableBottomNavigationView: UIView {
                 maker.leading.equalToSuperview()
                 maker.centerY.equalToSuperview()
             }
+            
+            view._menuItemsScrollView.snp.remakeConstraints({ (maker) in
+                maker.height.equalTo(Self.height)
+                maker.leading.equalTo(view._fixedMenuItemView.snp.trailing)
+                maker.top.bottom.equalToSuperview()
+                if items.count <= Self.maximumPresentableMenuItemCount {
+                    maker.trailing.equalToSuperview()
+                }
+            })
             
             items
                 .compactMap({ view._makeMenuItemView(menuItem: $0) })
@@ -48,9 +58,7 @@ public final class ScrollableBottomNavigationView: UIView {
     
     private var _selectedMenuItemName: String = "" {
         didSet {
-            guard let menuItemsViews = _menuItemsStackView.arrangedSubviews as? [BottomTabBarMenuItemView],
-                  menuItemsViews.contains(where: { $0.appName == _selectedMenuItemName })
-            else {
+            guard let menuItemsViews = _menuItemsStackView.arrangedSubviews as? [BottomTabBarMenuItemView] else {
                 return
             }
             menuItemsViews.forEach {
@@ -134,12 +142,6 @@ public final class ScrollableBottomNavigationView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        _fixedMenuItemDisposable?.dispose()
-        _fixedMenuItemDisposable = nil
-        removeAllMenuItems()
-    }
-    
     public func resizeMenuItemViews(deviceWidth: CGFloat) {
         let menuItemsCount: Int = {
             self._menuItemsStackView.arrangedSubviews.count < 6 ? self._menuItemsStackView.arrangedSubviews.count : 5
@@ -210,7 +212,7 @@ public final class ScrollableBottomNavigationView: UIView {
             maker.height.equalTo(Self.height)
             maker.centerY.equalToSuperview()
             maker.leading.equalTo(_menuItemsScrollView.snp.trailing)
-            maker.trailing.equalToSuperview().offset(-2)
+            maker.trailing.equalToSuperview().offset(-8)
         })
         
         _isLeftEdge
