@@ -24,7 +24,7 @@ public final class ScrollableBottomNavigationView: UIView {
             view.removeAllMenuItems()
             
             let presentableMenuItemCount: Int = items.count < 6 ? items.count : 5
-            let menuItemWidth: CGFloat = (Self.tabBarWidth - 32) / CGFloat(presentableMenuItemCount + 1)
+            let menuItemWidth: CGFloat = (Self.tabBarWidth - 16) / CGFloat(presentableMenuItemCount + 1)
             view._menuItemWidth = menuItemWidth
             
             self._fixedMenuItemView.snp.remakeConstraints { (maker) in
@@ -84,10 +84,14 @@ public final class ScrollableBottomNavigationView: UIView {
     
     private let _leftChevronImageView: UIImageView = {
         let imageView: UIImageView = .init(image: UIImage(named: "ic_chevron_left_dark_16"))
+        imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = .white
         return imageView
     }()
     private let _rightChevronImageView: UIImageView = {
         let imageView: UIImageView = .init(image: UIImage(named: "ic_chevron_right_dark_16"))
+        imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = .white
         return imageView
     }()
     
@@ -96,7 +100,7 @@ public final class ScrollableBottomNavigationView: UIView {
             .map({ $0.x })
             .map({ [weak self] (x) in
                 guard let owner = self, owner._menuItemsCount > 5 else { return true }
-                return x <= 0
+                return x <= (owner._menuItemWidth / 2)
             })
     }
     private var _isRightEdge: Driver<Bool> {
@@ -176,14 +180,6 @@ public final class ScrollableBottomNavigationView: UIView {
             maker.centerY.equalToSuperview()
         }
         
-        _leftChevronImageView.isHidden = true
-        addSubview(_leftChevronImageView)
-        _leftChevronImageView.snp.makeConstraints({ (maker) in
-            maker.size.equalTo(16)
-            maker.centerY.equalToSuperview()
-            maker.leading.equalTo(_fixedMenuItemView.snp.trailing)
-        })
-        
         _menuItemsScrollView.addSubview(_menuItemsStackView)
         addSubview(_menuItemsScrollView)
         
@@ -194,14 +190,24 @@ public final class ScrollableBottomNavigationView: UIView {
         
         _menuItemsScrollView.snp.makeConstraints { (maker) in
             maker.height.equalTo(Self.height)
-            maker.leading.equalTo(_leftChevronImageView.snp.trailing)
+            maker.leading.equalTo(_fixedMenuItemView.snp.trailing)
             maker.top.bottom.equalToSuperview()
         }
+
+        _leftChevronImageView.isHidden = true
+        addSubview(_leftChevronImageView)
+        _leftChevronImageView.snp.makeConstraints({ (maker) in
+            maker.width.equalTo(16)
+            maker.height.equalTo(Self.height)
+            maker.centerY.equalToSuperview()
+            maker.centerX.equalTo(_fixedMenuItemView.snp.trailing)
+        })
         
         _rightChevronImageView.isHidden = true
         addSubview(_rightChevronImageView)
         _rightChevronImageView.snp.makeConstraints({ (maker) in
-            maker.size.equalTo(16)
+            maker.width.equalTo(16)
+            maker.height.equalTo(Self.height)
             maker.centerY.equalToSuperview()
             maker.leading.equalTo(_menuItemsScrollView.snp.trailing)
             maker.trailing.equalToSuperview().offset(-2)
