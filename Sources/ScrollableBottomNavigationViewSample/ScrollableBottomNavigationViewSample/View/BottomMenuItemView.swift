@@ -81,8 +81,8 @@ public final class BottomTabBarMenuItemView: UIView {
         addSubview(_nameLabel)
         _nameLabel.snp.makeConstraints { (maker) in
             maker.top.equalTo(_iconImageView.snp.bottom).offset(2)
-            maker.leading.equalToSuperview().offset(2)
-            maker.trailing.equalToSuperview().offset(-2)
+            maker.leading.equalToSuperview().offset(1)
+            maker.trailing.equalToSuperview().offset(-1)
         }
         
         _badgeView.isHidden = true

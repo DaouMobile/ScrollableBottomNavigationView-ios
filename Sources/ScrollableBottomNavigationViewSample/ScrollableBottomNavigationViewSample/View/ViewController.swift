@@ -1,6 +1,5 @@
 import UIKit
 import RxSwift
-import ScrollableBottomNavigationView_ios
 
 class ViewController: UIViewController {
 
@@ -31,7 +30,9 @@ class ViewController: UIViewController {
         }
         
         // MARK: BottomNavigationView의 view data 초기화
-        _bottomNavigationView.menuItems = _viewModel.bottomMenuItems
+        _viewModel.bottomMenuItems.asObservable()
+            .bind(to: _bottomNavigationView.menuItems)
+            .disposed(by: _disposeBag)
         _bind()
     }
     

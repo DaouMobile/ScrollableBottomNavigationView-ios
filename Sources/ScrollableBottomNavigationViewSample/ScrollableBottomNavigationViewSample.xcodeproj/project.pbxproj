@@ -8,31 +8,45 @@
 
 /* Begin PBXBuildFile section */
 		EA3A154F27D5D5DC00621BF7 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = EA3A154E27D5D5DC00621BF7 /* SnapKit */; };
-		EA3A155527D5D8FD00621BF7 /* ScrollableBottomNavigationView-ios in Frameworks */ = {isa = PBXBuildFile; productRef = EA3A155427D5D8FD00621BF7 /* ScrollableBottomNavigationView-ios */; };
 		EA3A155827D5D9DD00621BF7 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = EA3A155727D5D9DD00621BF7 /* RxCocoa */; };
 		EA3A155A27D5D9DD00621BF7 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = EA3A155927D5D9DD00621BF7 /* RxRelay */; };
 		EA3A155C27D5D9DD00621BF7 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EA3A155B27D5D9DD00621BF7 /* RxSwift */; };
+		EA53EDC528E452AC0083D2C4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53EDB728E452AC0083D2C4 /* ViewController.swift */; };
+		EA53EDC628E452AC0083D2C4 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53EDB828E452AC0083D2C4 /* ViewModel.swift */; };
+		EA53EDC728E452AC0083D2C4 /* ScrollableBottomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53EDB928E452AC0083D2C4 /* ScrollableBottomNavigationView.swift */; };
+		EA53EDC828E452AC0083D2C4 /* BottomMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53EDBA28E452AC0083D2C4 /* BottomMenuItemView.swift */; };
+		EA53EDC928E452AC0083D2C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA53EDBC28E452AC0083D2C4 /* Assets.xcassets */; };
+		EA53EDCA28E452AC0083D2C4 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53EDBF28E452AC0083D2C4 /* UIColor.swift */; };
+		EA53EDCB28E452AC0083D2C4 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53EDC028E452AC0083D2C4 /* Dictionary.swift */; };
+		EA53EDCC28E452AC0083D2C4 /* BottomMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53EDC228E452AC0083D2C4 /* BottomMenuItem.swift */; };
+		EA53EDCD28E452AC0083D2C4 /* MenuImageMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA53EDC428E452AC0083D2C4 /* MenuImageMapper.swift */; };
+		EA53EDD028E453690083D2C4 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = EA53EDCF28E453690083D2C4 /* RxGesture */; };
 		EAB5433527D5B08D00E0EE7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB5433427D5B08D00E0EE7C /* AppDelegate.swift */; };
 		EAB5433727D5B08D00E0EE7C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB5433627D5B08D00E0EE7C /* SceneDelegate.swift */; };
-		EAB5433927D5B08D00E0EE7C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB5433827D5B08D00E0EE7C /* ViewController.swift */; };
 		EAB5433C27D5B08D00E0EE7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAB5433A27D5B08D00E0EE7C /* Main.storyboard */; };
 		EAB5433E27D5B08D00E0EE7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAB5433D27D5B08D00E0EE7C /* Assets.xcassets */; };
 		EAB5434127D5B08D00E0EE7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAB5433F27D5B08D00E0EE7C /* LaunchScreen.storyboard */; };
 		EAD79F9F27D5C9390089B542 /* CustomMenuImageMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD79F9E27D5C9390089B542 /* CustomMenuImageMapper.swift */; };
-		EAD79FA227D5C9FA0089B542 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAD79FA127D5C9FA0089B542 /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EA53EDB728E452AC0083D2C4 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EA53EDB828E452AC0083D2C4 /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		EA53EDB928E452AC0083D2C4 /* ScrollableBottomNavigationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollableBottomNavigationView.swift; sourceTree = "<group>"; };
+		EA53EDBA28E452AC0083D2C4 /* BottomMenuItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomMenuItemView.swift; sourceTree = "<group>"; };
+		EA53EDBC28E452AC0083D2C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EA53EDBF28E452AC0083D2C4 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		EA53EDC028E452AC0083D2C4 /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
+		EA53EDC228E452AC0083D2C4 /* BottomMenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BottomMenuItem.swift; sourceTree = "<group>"; };
+		EA53EDC428E452AC0083D2C4 /* MenuImageMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuImageMapper.swift; sourceTree = "<group>"; };
 		EAB5433127D5B08D00E0EE7C /* ScrollableBottomNavigationViewSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrollableBottomNavigationViewSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAB5433427D5B08D00E0EE7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EAB5433627D5B08D00E0EE7C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		EAB5433827D5B08D00E0EE7C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EAB5433B27D5B08D00E0EE7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EAB5433D27D5B08D00E0EE7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EAB5434027D5B08D00E0EE7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EAB5434227D5B08D00E0EE7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAD79F9E27D5C9390089B542 /* CustomMenuImageMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMenuImageMapper.swift; sourceTree = "<group>"; };
-		EAD79FA127D5C9FA0089B542 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,8 +55,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA3A155827D5D9DD00621BF7 /* RxCocoa in Frameworks */,
-				EA3A155527D5D8FD00621BF7 /* ScrollableBottomNavigationView-ios in Frameworks */,
 				EA3A155C27D5D9DD00621BF7 /* RxSwift in Frameworks */,
+				EA53EDD028E453690083D2C4 /* RxGesture in Frameworks */,
 				EA3A155A27D5D9DD00621BF7 /* RxRelay in Frameworks */,
 				EA3A154F27D5D5DC00621BF7 /* SnapKit in Frameworks */,
 			);
@@ -51,6 +65,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EA53EDB628E452AC0083D2C4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EA53EDB728E452AC0083D2C4 /* ViewController.swift */,
+				EA53EDB828E452AC0083D2C4 /* ViewModel.swift */,
+				EA53EDB928E452AC0083D2C4 /* ScrollableBottomNavigationView.swift */,
+				EA53EDBA28E452AC0083D2C4 /* BottomMenuItemView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EA53EDBB28E452AC0083D2C4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EA53EDBC28E452AC0083D2C4 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		EA53EDBD28E452AC0083D2C4 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				EA53EDBE28E452AC0083D2C4 /* Extension */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		EA53EDBE28E452AC0083D2C4 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				EA53EDBF28E452AC0083D2C4 /* UIColor.swift */,
+				EA53EDC028E452AC0083D2C4 /* Dictionary.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		EA53EDC128E452AC0083D2C4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EA53EDC228E452AC0083D2C4 /* BottomMenuItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EA53EDC328E452AC0083D2C4 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				EA53EDC428E452AC0083D2C4 /* MenuImageMapper.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		EAB5432827D5B08D00E0EE7C = {
 			isa = PBXGroup;
 			children = (
@@ -70,7 +136,11 @@
 		EAB5433327D5B08D00E0EE7C /* ScrollableBottomNavigationViewSample */ = {
 			isa = PBXGroup;
 			children = (
-				EAD79FA027D5C9F20089B542 /* View */,
+				EA53EDBD28E452AC0083D2C4 /* Common */,
+				EA53EDC128E452AC0083D2C4 /* Model */,
+				EA53EDBB28E452AC0083D2C4 /* Resources */,
+				EA53EDC328E452AC0083D2C4 /* Util */,
+				EA53EDB628E452AC0083D2C4 /* View */,
 				EAD79F9D27D5C9220089B542 /* Mapper */,
 				EAB5433627D5B08D00E0EE7C /* SceneDelegate.swift */,
 				EAB5433427D5B08D00E0EE7C /* AppDelegate.swift */,
@@ -88,15 +158,6 @@
 				EAD79F9E27D5C9390089B542 /* CustomMenuImageMapper.swift */,
 			);
 			path = Mapper;
-			sourceTree = "<group>";
-		};
-		EAD79FA027D5C9F20089B542 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				EAB5433827D5B08D00E0EE7C /* ViewController.swift */,
-				EAD79FA127D5C9FA0089B542 /* ViewModel.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -117,10 +178,10 @@
 			name = ScrollableBottomNavigationViewSample;
 			packageProductDependencies = (
 				EA3A154E27D5D5DC00621BF7 /* SnapKit */,
-				EA3A155427D5D8FD00621BF7 /* ScrollableBottomNavigationView-ios */,
 				EA3A155727D5D9DD00621BF7 /* RxCocoa */,
 				EA3A155927D5D9DD00621BF7 /* RxRelay */,
 				EA3A155B27D5D9DD00621BF7 /* RxSwift */,
+				EA53EDCF28E453690083D2C4 /* RxGesture */,
 			);
 			productName = ScrollableBottomNavigationViewSample;
 			productReference = EAB5433127D5B08D00E0EE7C /* ScrollableBottomNavigationViewSample.app */;
@@ -152,8 +213,8 @@
 			mainGroup = EAB5432827D5B08D00E0EE7C;
 			packageReferences = (
 				EA3A154D27D5D5DC00621BF7 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				EA3A155327D5D8FD00621BF7 /* XCRemoteSwiftPackageReference "ScrollableBottomNavigationView-ios" */,
 				EA3A155627D5D9DD00621BF7 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				EA53EDCE28E453690083D2C4 /* XCRemoteSwiftPackageReference "RxGesture" */,
 			);
 			productRefGroup = EAB5433227D5B08D00E0EE7C /* Products */;
 			projectDirPath = "";
@@ -171,6 +232,7 @@
 			files = (
 				EAB5434127D5B08D00E0EE7C /* LaunchScreen.storyboard in Resources */,
 				EAB5433E27D5B08D00E0EE7C /* Assets.xcassets in Resources */,
+				EA53EDC928E452AC0083D2C4 /* Assets.xcassets in Resources */,
 				EAB5433C27D5B08D00E0EE7C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -182,11 +244,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAB5433927D5B08D00E0EE7C /* ViewController.swift in Sources */,
+				EA53EDC528E452AC0083D2C4 /* ViewController.swift in Sources */,
+				EA53EDC728E452AC0083D2C4 /* ScrollableBottomNavigationView.swift in Sources */,
 				EAB5433527D5B08D00E0EE7C /* AppDelegate.swift in Sources */,
+				EA53EDCB28E452AC0083D2C4 /* Dictionary.swift in Sources */,
 				EAD79F9F27D5C9390089B542 /* CustomMenuImageMapper.swift in Sources */,
-				EAD79FA227D5C9FA0089B542 /* ViewModel.swift in Sources */,
+				EA53EDCD28E452AC0083D2C4 /* MenuImageMapper.swift in Sources */,
+				EA53EDC828E452AC0083D2C4 /* BottomMenuItemView.swift in Sources */,
+				EA53EDCC28E452AC0083D2C4 /* BottomMenuItem.swift in Sources */,
 				EAB5433727D5B08D00E0EE7C /* SceneDelegate.swift in Sources */,
+				EA53EDC628E452AC0083D2C4 /* ViewModel.swift in Sources */,
+				EA53EDCA28E452AC0083D2C4 /* UIColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,20 +484,20 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		EA3A155327D5D8FD00621BF7 /* XCRemoteSwiftPackageReference "ScrollableBottomNavigationView-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/DaouMobile/ScrollableBottomNavigationView-ios.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.4.2;
-			};
-		};
 		EA3A155627D5D9DD00621BF7 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 6.0.0;
+			};
+		};
+		EA53EDCE28E453690083D2C4 /* XCRemoteSwiftPackageReference "RxGesture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxGesture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -439,11 +507,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EA3A154D27D5D5DC00621BF7 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		EA3A155427D5D8FD00621BF7 /* ScrollableBottomNavigationView-ios */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EA3A155327D5D8FD00621BF7 /* XCRemoteSwiftPackageReference "ScrollableBottomNavigationView-ios" */;
-			productName = "ScrollableBottomNavigationView-ios";
 		};
 		EA3A155727D5D9DD00621BF7 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -459,6 +522,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EA3A155627D5D9DD00621BF7 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		EA53EDCF28E453690083D2C4 /* RxGesture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EA53EDCE28E453690083D2C4 /* XCRemoteSwiftPackageReference "RxGesture" */;
+			productName = RxGesture;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

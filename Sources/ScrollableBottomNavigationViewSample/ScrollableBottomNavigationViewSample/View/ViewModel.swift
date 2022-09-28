@@ -1,7 +1,6 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import ScrollableBottomNavigationView_ios
 
 final class ViewModel {
     
@@ -13,13 +12,10 @@ final class ViewModel {
     init() {
         // MARK: ViewModel에서 BottomView에 사용될 데이터 초기화
         _bottomMenuItems = .init(value: [
-            BottomMenuItem(id: "040", name: "투데이"),
-            BottomMenuItem(id: "041", name: "대화"),
-            BottomMenuItem(id: "042", name: "조직도"),
-            BottomMenuItem(id: "043", name: "알림1"),
-            BottomMenuItem(id: "044", name: "알림2"),
-            BottomMenuItem(id: "045", name: "알림3"),
-            BottomMenuItem(id: "046", name: "알림4")
+            BottomMenuItem(id: "040", appName: "투데이", localizedName: "메뉴명이좀길것같습니다", seq: 1),
+            BottomMenuItem(id: "041", appName: "대화", localizedName: "메뉴명이좀길것같습니다", seq: 2),
+            BottomMenuItem(id: "042", appName: "조직도", localizedName: "조직도", seq: 3),
+            BottomMenuItem(id: "043", appName: "알림", localizedName: "알림", seq: 4)
         ])
     }
 }

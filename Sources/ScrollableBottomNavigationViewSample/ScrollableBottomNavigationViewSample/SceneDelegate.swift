@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import ScrollableBottomNavigationView_ios
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

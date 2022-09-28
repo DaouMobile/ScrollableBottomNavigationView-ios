@@ -1,5 +1,4 @@
 import UIKit
-import ScrollableBottomNavigationView_ios
 
 struct CustomMenuImageMapper: BottomMenuImageMapper {
     
