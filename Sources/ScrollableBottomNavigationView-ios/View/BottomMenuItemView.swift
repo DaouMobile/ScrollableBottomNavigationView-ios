@@ -73,14 +73,14 @@ public final class BottomTabBarMenuItemView: UIView {
         _iconImageView.image = _bottomMenuImageMapper.mapToUnselectedImage(from: appName)
         addSubview(_iconImageView)
         _iconImageView.snp.makeConstraints { (maker) in
-            maker.top.equalToSuperview()
+            maker.top.equalToSuperview().offset(4)
             maker.centerX.equalToSuperview()
         }
         
         _nameLabel.text = localizedName
         addSubview(_nameLabel)
         _nameLabel.snp.makeConstraints { (maker) in
-            maker.top.equalTo(_iconImageView.snp.bottom).offset(2)
+            maker.top.equalTo(_iconImageView.snp.bottom)
             maker.leading.equalToSuperview().offset(2)
             maker.trailing.equalToSuperview().offset(-2)
         }

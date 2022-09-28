@@ -29,6 +29,7 @@ public final class ScrollableBottomNavigationView: UIView {
             view._menuItemWidth = menuItemWidth
             
             self._fixedMenuItemView.snp.remakeConstraints { (maker) in
+                maker.height.equalTo(Self.height)
                 maker.width.equalTo(menuItemWidth)
                 maker.leading.equalToSuperview()
                 maker.top.equalToSuperview()
